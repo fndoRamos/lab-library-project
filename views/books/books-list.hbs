@@ -1,0 +1,25 @@
+<h1>Books in our DB:</h1>
+
+<form method= "GET" action="/books">
+    <label>
+        Min Rating:
+        <input type="number" name="minRating" min="0" required>
+        <button type="submit">submit</button>
+    </label>
+</form>
+
+{{#each books}}
+    <section class="book-summary">
+        <h2>{{this.title}}</h2>
+        <p>
+            Author: {{this.author.name}} <br />
+            Rating: {{this.rating}} <br />
+            <a href="/books/{{this._id}}">More details</a> <br />
+            <a href="/books/{{this._id}}/edit">Edit</a>
+            <form action="/books/{{_id}}/delete" method="POST">
+                <button>Delete</button>
+            </form>
+        </p>
+
+    </section>
+{{/each}}
