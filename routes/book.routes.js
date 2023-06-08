@@ -1,7 +1,9 @@
 const express = require("express");
 const Book = require("../models/Book.model");
 const Author = require("../models/Author.model");
+const isLoggedIn = require("../middleware/isLoggedIn");
 const router = express.Router();
+
 
 // GET books by min rating
 // router.get("/books", (req, res, next) => {
@@ -21,7 +23,8 @@ const router = express.Router();
 
 // });
 
-/* GET home page */
+
+// READ: display all books
 router.get("/books", (req, res, next) => {
   Book.find()
     .populate("author")
@@ -37,7 +40,7 @@ router.get("/books", (req, res, next) => {
 });
 
 // GET /books/create    (display form)
-router.get("/books/create", (req, res, next) => {
+router.get("/books/create", isLoggedIn, (req, res, next) => {
   Author.find()
     .then((authorsFromDB) => {
       res.render("books/book-create", { authorsArr: authorsFromDB });
@@ -49,7 +52,7 @@ router.get("/books/create", (req, res, next) => {
 });
 
 // POST /books/create   (process form)
-router.post("/books/create", (req, res, next) => {
+router.post("/books/create", isLoggedIn, (req, res, next) => {
   
   const newBook = {
     title: req.body.title,
@@ -68,7 +71,7 @@ router.post("/books/create", (req, res, next) => {
     });
 });
 // UPDATE BOOK display form
-router.get("/books/:bookId/edit", (req, res, next) => {
+router.get("/books/:bookId/edit", isLoggedIn, (req, res, next) => {
   const { bookId } = req.params;
 
   let authors;
@@ -112,7 +115,7 @@ router.get("/books/:bookId/edit", (req, res, next) => {
   //     });
 });
 // UPDATE BOOK process form
-router.post("/books/:bookId/edit", (req, res, next) => {
+router.post("/books/:bookId/edit", isLoggedIn, (req, res, next) => {
   const { bookId } = req.params;
   const { title, author, description, rating } = req.body;
 
@@ -130,7 +133,7 @@ router.post("/books/:bookId/edit", (req, res, next) => {
     });
 });
 // Delete book
-router.post("/books/:bookId/delete", (req, res, next) => {
+router.post("/books/:bookId/delete", isLoggedIn, (req, res, next) => {
   const { bookId } = req.params;
 
   Book.findByIdAndDelete(bookId)

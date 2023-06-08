@@ -26,12 +26,12 @@ const projectName = "library-project";
 
 app.locals.appTitle = `${capitalize(projectName)} created with IronLauncher`;
 
+
+
 // 👇 Start handling routes here
   //const indexRoutes = require("./routes/index.routes");
 app.use("/", require("./routes/index.routes"));
 app.use("/", require("./routes/auth.routes"));
-
-
   //const bookRoutes = require("./routes/book.routes");
 app.use("/", require("./routes/book.routes"));
 app.use("/", require("./routes/author.routes"));

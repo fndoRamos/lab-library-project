@@ -15,12 +15,15 @@
       <a href="/authors">Authors List</a>
       <a href="/books">Books List</a>
       <a href="/books/create">Create Book</a>
-      <a href="/signup">Signup</a>
-      <a href="/Login">Login</a>
 
-      <form id="logout-form" method="POST" action="/logout">
-        <button>Logout</button>
-      </form>
+      {{#if userDetails}}
+        <form id="logout-form" method="POST" action="/logout">
+          <button>Logout</button>
+        </form>
+      {{else}}
+        <a href="/signup">Signup</a>
+        <a href="/Login">Login</a>
+      {{/if}}
 
     </nav>
 
